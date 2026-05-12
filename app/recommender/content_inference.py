@@ -34,16 +34,18 @@ def recommend_movies(
     _, tfidf_matrix, df = load_artifacts()
 
     matches = df[
-        df["title"].str.contains(
-            movie_title,
-            case=False,
-            na=False
-        )
+        df["title"].str.lower() == movie_title.lower()
     ]
 
     if matches.empty:
-        print(f"No movie found for: {movie_title}")
-        return None
+        matches = df[
+            df["title"].str.contains(
+                movie_title,
+                case=False,
+                na=False,
+                regex=False
+            )
+        ]
 
     selected_index = matches.index[0]
     selected_title = df.loc[selected_index, "title"]
