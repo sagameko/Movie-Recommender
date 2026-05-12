@@ -15,7 +15,7 @@ def build_content_features() -> None:
                 ''
             ) AS tags,
             LOWER(
-                REPLACE(m.genres, '|', '') || \ \ ||
+                REPLACE(m.genres, '|', ' ') || ' ' ||
                 COALESCE(STRING_AGG(DISTINCT t.tag, ' '), '')
             ) AS content_text
         FROM movies m
